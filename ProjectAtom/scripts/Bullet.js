@@ -16,7 +16,6 @@ class Bullet{
 
     this.sprite = TankOnline.bulletGroup.create(tank.sprite.x, tank.sprite.y, spriteName);
     this.sprite.anchor.set(0.5,0.5);
-    TankOnline.game.physics.arcade.enable(this.sprite);
 
     this.sprite.body.velocity = new Phaser.Point(tank.direction.x * 500, tank.direction.y * 500);
     this.sprite.bulletDamage = 1;

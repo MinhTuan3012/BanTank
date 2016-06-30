@@ -32,6 +32,11 @@ var preload = function(){
   TankOnline.game.load.image('tankLeft', './images/tank_player1_left_c0_t1_s1.png');
   TankOnline.game.load.image('tankRight', './images/tank_player1_right_c0_t1_s1.png');
 
+  TankOnline.game.load.image('tankDown1', './images/tank_armor_down_c1_t1.png');
+  TankOnline.game.load.image('tankUp1', './images/tank_armor_up_c1_t1.png');
+  TankOnline.game.load.image('tankLeft1', './images/tank_armor_left_c1_t1.png');
+  TankOnline.game.load.image('tankRight1', './images/tank_armor_right_c1_t1.png');
+
   TankOnline.game.load.image('bulletDown', './images/bullet_down.png');
   TankOnline.game.load.image('bulletUp', './images/bullet_up.png');
   TankOnline.game.load.image('bulletLeft', './images/bullet_left.png');
@@ -50,7 +55,7 @@ var create = function(){
   allyGroup = TankOnline.game.add.physicsGroup();
 
   tank = new Tank(window.innerWidth/2 +100, window.innerHeight/2, allyGroup);
-  tank1 = new Tank(window.innerWidth/2 -300 , window.innerHeight/2 , allyGroup);
+  tank1 = new tank1(window.innerWidth/2 -300 , window.innerHeight/2 , allyGroup);
   for(var i =0; i<10; i++){
     new Tank(Math.random()*TankOnline.game.world.bounds.width,
               Math.random()*TankOnline.game.world.bounds.height, enemyGroup);
