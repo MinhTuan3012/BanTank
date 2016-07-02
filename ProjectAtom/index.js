@@ -10,7 +10,15 @@ app.get('/', function(req, res){
 });
 
 io.on('connection', function(socket){
-  console.log('New User Connected');
+  //console.log('New User Connected');
+  socket.on('connected',function(data){
+    console.log(data.msg);
+    var tankX = Math.floor((Math.random() * 3200) + 1);
+    var tankY = Math.floor((Math.random() * 800) + 1);
+    console.log(tankX);
+    console.log(tankY);
+    socket.emit('set_tank',{x:tankX,y:tankY});
+  });
 });
 
 http.listen(6969, function(){

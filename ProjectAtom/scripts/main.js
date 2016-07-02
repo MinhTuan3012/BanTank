@@ -47,12 +47,18 @@ var create = function(){
   TankOnline.game.physics.startSystem(Phaser.Physics.ARCADE);
   TankOnline.keyboard = TankOnline.game.input.keyboard;
 
-
   TankOnline.wallGroup = TankOnline.game.add.physicsGroup();
   TankOnline.bulletGroup = TankOnline.game.add.physicsGroup();
   TankOnline.tankGroup = TankOnline.game.add.physicsGroup();
 
-  var tank = new Tank(window.innerWidth/2, window.innerHeight/2, TankOnline.tankGroup);
+  var tankX = Math.floor((Math.random() * 3200) + 1);
+  var tankY = Math.floor((Math.random() * 800) + 1);
+  var tank = new Tank(tankX, tankY, TankOnline.tankGroup);
+  // var tank = new Tank(window.innerWidth/2, window.innerHeight/2, TankOnline.tankGroup);
+  //var socket = io.connect();
+  // socket.on('set_tank',function(data){
+  //   tank = new Tank(data.x, data.y, TankOnline.tankGroup);
+  // });
   TankOnline.inputController = new InputController(TankOnline.keyboard, tank);
 
   TankOnline.game.world.setBounds(0, 0, 3200, 800);
