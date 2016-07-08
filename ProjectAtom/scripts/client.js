@@ -1,13 +1,39 @@
 class Client{
   constructor(){
     this.socket = io();
-    this.socket.emit('connected',{msg:"New Player connected"});
-    this.socket.on('set_tank',function(data){
-      console.log(data.x);
-      console.log(data.y);
+
+    this.socket.on('connected', function(msg){
+      TankOnline.onConnected(msg);
     });
-    // this.socket.on('connected', function(msg){
-    //   console.log(msg);
-    // })
+    this.socket.on('other_players', function(msg){
+      TankOnline.onReceivedOtherPlayersData(msg);
+    });
+    this.socket.on('new_player_connected', function(msg){
+      TankOnline.onReceivedNewPlayerData(msg);
+    });
+    this.socket.on('player_moved', function(msg){
+      TankOnline.onPlayerMoved(msg);
+    });
+    this.socket.on('player_fired', function(msg){
+      TankOnline.onPlayerfire(msg);
+    });
+    this.socket.on('sendDiedToAll', function(msg){
+      TankOnline.updateTank(msg);
+    });
+  }
+
+  reportMove(id, direction, position){
+    this.socket.emit('tank_moved', {
+      id        : id,
+      direction : direction,
+      position  : position
+    });
+  }
+  reportFire(id, direction, position){
+    this.socket.emit('tank_fired', {
+      id        : id,
+      direction : direction,
+      position  : position
+    });
   }
 }
