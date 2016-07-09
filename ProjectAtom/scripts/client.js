@@ -17,8 +17,8 @@ class Client{
     this.socket.on('player_fired', function(msg){
       TankOnline.onPlayerfire(msg);
     });
-    this.socket.on('sendDiedToAll', function(msg){
-      TankOnline.updateTank(msg);
+    this.socket.on('player_died', function(msg){
+      TankOnline.onPlayerDied(msg);
     });
   }
 
@@ -34,6 +34,12 @@ class Client{
       id        : id,
       direction : direction,
       position  : position
+    });
+  }
+  reportDied(id, killer){
+    this.socket.emit('tank_died', {
+      id        : id,
+      killerId  : killer
     });
   }
 }

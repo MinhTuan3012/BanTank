@@ -40,6 +40,7 @@ var preload = function(){
   TankOnline.game.load.image('bulletRight', './images/bullet_right.png');
 
   TankOnline.game.load.image('wall', './images/wall_steel.png');
+  TankOnline.game.load.spritesheet('tankExplosion', './images/big_explosion_4.png',64,64,5);
 }
 
 var create = function(){
@@ -107,6 +108,7 @@ var onBulletHitTank = function(bulletSprite, tankSprite){
   if(bulletSprite.tankSprite != tankSprite){
     if(tankSprite.id == TankOnline.inputController.tank.sprite.id){
       tankSprite.damage(bulletSprite.bulletDamage);
+      if(!tankSprite.alive) TankOnline.client.reportDied(TankOnline.inputController.tank.sprite.id, bulletSprite.id);
     }
     bulletSprite.kill();
   }
@@ -143,11 +145,14 @@ TankOnline.onPlayerfire = function(data){
   enemy.sprite.direction = data.direction;
   new Bullet(enemy);
 }
-TankOnline.updateTank = function(id){
-  for(var i=0; i<TankOnline.enemies.length; i++){
-    if(TankOnline.enemies[i].sprite.id == id){
-      TankOnline.enemies[i].sprite.destroy();
-      return;
-    }
-  }
+TankOnline.onPlayerDied = function(data){
+  var enemy = TankOnline.getPlayerById(data.id, true);
+  if(!enemy) return;
+  enemy.sprite.kill();
+}
+TankOnline.onTankExploded = function(position){
+  var explosion = TankOnline.game.add.sprite(position.x, position.y, 'tankExplosion');
+  explosion.anchor.set(0.5,0.5);
+  explosion.animations.add('explode');
+  explosion.play('explode', 5, false, true);
 }
